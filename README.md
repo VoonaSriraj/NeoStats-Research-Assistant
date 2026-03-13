@@ -16,7 +16,7 @@ Live app: `https://neostats-research-assistant.streamlit.app/`
 
 =======
 >>>>>>> dad6f2a (added readme file with output ss)
-Save the screenshot you shared as `assets/demo.png` and GitHub will render it here:
+Save the screenshot you shared as `demo.png` and GitHub will render it here:
 
 ![NeoStats Research Assistant — RAG + Tavily demo](assets/demo.png)
 
@@ -130,5 +130,6 @@ TAVILY_API_KEY = "..."
 ## License
 
 Internal / assignment use.
+
 
 
