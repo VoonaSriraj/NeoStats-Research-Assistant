@@ -1,135 +1,205 @@
 # NeoStats Research Assistant (Streamlit)
 
-A production-ready **research assistant chatbot** that answers questions using:
+A production-ready **AI research assistant chatbot** that answers questions using:
 
-- **Your uploaded documents (RAG)**: PDF/TXT → chunking → embeddings → FAISS retrieval
-- **Live web search (Tavily)**: optional, toggleable
-- **Multiple LLM providers**: Groq, OpenAI, Gemini (selectable in the UI)
-- **Response modes**: Concise vs Detailed (injects style instructions into the system prompt)
+* 📄 **Your uploaded documents (RAG)** – PDF/TXT → chunking → embeddings → FAISS retrieval
+* 🌐 **Live web search** using Tavily
+* 🤖 **Multiple LLM providers** – Groq, OpenAI, Gemini
+* ⚡ **Fast UI** built with Streamlit
 
-This project follows the required modular structure from the NeoStats AI Engineer case study and keeps secrets out of source control.
+The assistant combines **Retrieval Augmented Generation (RAG)** with **live search** to generate grounded and up-to-date answers.
 
-## Demo (RAG + Tavily)
+---
 
-<<<<<<< HEAD
-Live app: `https://neostats-research-assistant.streamlit.app/`
+# 🚀 Live Demo
 
-=======
->>>>>>> dad6f2a (added readme file with output ss)
-Save the screenshot you shared as `demo.png` and GitHub will render it here:
+🔗 **Try the app:**
+https://neostats-research-assistant.streamlit.app/
 
-![NeoStats Research Assistant — RAG + Tavily demo](assets/demo.png)
+Click the screenshot below to open the demo.
 
-## Features
+[![NeoStats Research Assistant Demo](assets/demo.png)](https://neostats-research-assistant.streamlit.app/)
 
-- **LLM provider switching**: Groq / OpenAI / Gemini
-- **RAG indexing (cached)**:
-  - Upload PDF/TXT files
-  - Index once per upload (cached in `st.session_state`)
-  - Retrieve top-k chunks to ground answers
-- **Web search tool**:
-  - Uses Tavily when enabled
-  - Fails gracefully (empty results) if key is missing
-- **Safety & quality**:
-  - No API keys hardcoded
-  - External calls wrapped in `try/except`
-  - UI surfaces errors with `st.error(...)`
+---
 
-## Project Structure
+# ✨ Features
+
+### 🔹 Retrieval Augmented Generation (RAG)
+
+* Upload **PDF or TXT files**
+* Automatic **chunking**
+* Vector embeddings
+* **FAISS similarity search**
+* Context-aware responses
+
+### 🔹 Live Web Search
+
+* Uses **Tavily API**
+* Toggleable in UI
+* Retrieves recent information from the web
+
+### 🔹 Multiple LLM Providers
+
+Switch between:
+
+* **Groq**
+* **OpenAI**
+* **Google Gemini**
+
+Directly from the sidebar.
+
+### 🔹 Response Modes
+
+Two output styles:
+
+* **Concise** → short answers
+* **Detailed** → in-depth explanations
+
+---
+
+# 🧠 System Architecture
+
+```
+User Query
+    │
+    ▼
+Streamlit Chat UI
+    │
+    ▼
+Query Router
+ ├── Document Retrieval (FAISS)
+ │      │
+ │      ▼
+ │   Context Chunks
+ │
+ └── Tavily Web Search
+        │
+        ▼
+    Search Results
+        │
+        ▼
+      LLM
+ (Groq / OpenAI / Gemini)
+        │
+        ▼
+   Generated Response
+```
+
+---
+
+# 📁 Project Structure
 
 ```
 project/
+│
 ├── config/
 │   └── config.py
+│
 ├── models/
 │   ├── llm.py
 │   └── embeddings.py
+│
 ├── utils/
 │   ├── rag_utils.py
 │   └── search_utils.py
+│
+├── assets/
+│   └── demo.png
+│
 ├── app.py
-└── requirements.txt
+├── requirements.txt
+└── README.md
 ```
 
-## Requirements
+---
 
-- Python **3.12+**
-- One LLM API key (Groq/OpenAI/Gemini)
-- Optional: Tavily API key for live web search
+# ⚙️ Requirements
 
-## Installation
+* Python **3.12+**
+* One LLM API key (Groq/OpenAI/Gemini)
+* Optional **Tavily API key** for web search
 
-### Option A: `uv` (recommended)
+---
 
-```bash
-uv sync
-uv run streamlit run app.py
-```
+# 🛠 Installation
 
-### Option B: `pip`
+## Option 1 — Using pip
 
 ```bash
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Configuration (Secrets)
+## Option 2 — Using uv (recommended)
 
-### Local development with `.env`
-
-Create a `.env` file in the project root (this repo ignores it via `.gitignore`):
-
-```env
-GROQ_API_KEY=...
-TAVILY_API_KEY=...
+```bash
+uv sync
+uv run streamlit run app.py
 ```
 
-Supported variables:
+---
 
-- **LLM keys**
-  - `GROQ_API_KEY`
-  - `OPENAI_API_KEY`
-  - `GOOGLE_API_KEY`
-- **Search key**
-  - `TAVILY_API_KEY`
-- **Optional defaults**
-  - `DEFAULT_GROQ_MODEL` (default: `llama-3.1-8b-instant`)
-  - `DEFAULT_OPENAI_MODEL` (default: `gpt-4o-mini`)
-  - `DEFAULT_GEMINI_MODEL` (default: `gemini-1.5-flash`)
-- **RAG chunking**
-  - `CHUNK_SIZE` (default: `500`)
-  - `CHUNK_OVERLAP` (default: `50`)
+# 🔑 Configuration
 
-### Streamlit Community Cloud (recommended for deployment)
+Create a `.env` file:
 
-In Streamlit Cloud → **App settings → Secrets**, paste TOML:
-
-```toml
-GROQ_API_KEY = "..."
-TAVILY_API_KEY = "..."
+```
+GROQ_API_KEY=your_key
+TAVILY_API_KEY=your_key
+OPENAI_API_KEY=your_key
+GOOGLE_API_KEY=your_key
 ```
 
-> Don’t commit `.env` to GitHub. Use Streamlit secrets for deployment.
+Optional settings:
 
-## Usage
+```
+DEFAULT_GROQ_MODEL=llama-3.1-8b-instant
+CHUNK_SIZE=500
+CHUNK_OVERLAP=50
+```
 
-1. Start the app.
-2. In the sidebar:
-   - Choose **LLM Provider**
-   - Choose **Response mode**
-   - Enable **document Q&A (RAG)** and upload PDF/TXT files (optional)
-   - Enable **live web search** (optional)
-3. Ask questions in the chat input.
+⚠️ Do **not commit `.env` to GitHub**.
 
-## Troubleshooting
+---
 
-- **API key missing**: ensure the variable is present in `.env` (local) or Streamlit Secrets (cloud), then restart the app.
-- **RAG indexing errors**: confirm you’re running via `uv run ...` (consistent environment) and that PDFs are readable (try TXT if needed).
-- **Web search shows nothing**: set `TAVILY_API_KEY` or disable web search.
+# 🧪 Usage
 
-## License
+1️⃣ Run the app
 
-Internal / assignment use.
+```
+streamlit run app.py
+```
 
+2️⃣ In the sidebar:
 
+* Select **LLM provider**
+* Choose **response mode**
+* Upload documents for **RAG**
+* Enable **web search**
 
+3️⃣ Ask questions in the chat.
+
+---
+
+# 🛡 Safety & Error Handling
+
+* API keys stored in **environment variables**
+* External calls wrapped in **try/except**
+* Errors surfaced using **Streamlit UI alerts**
+
+---
+
+# 📌 Technologies Used
+
+* **Streamlit**
+* **LangChain style RAG pipeline**
+* **FAISS**
+* **Sentence Transformers**
+* **Groq / OpenAI / Gemini APIs**
+* **Tavily Web Search**
+
+---
+
+# 📄 License
+
+Internal / Assignment Use
