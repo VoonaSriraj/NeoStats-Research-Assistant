@@ -11,8 +11,11 @@ This project follows the required modular structure from the NeoStats AI Enginee
 
 ## Demo (RAG + Tavily)
 
+<<<<<<< HEAD
 Live app: `https://neostats-research-assistant.streamlit.app/`
 
+=======
+>>>>>>> dad6f2a (added readme file with output ss)
 Save the screenshot you shared as `assets/demo.png` and GitHub will render it here:
 
 ![NeoStats Research Assistant — RAG + Tavily demo](assets/demo.png)
