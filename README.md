@@ -162,6 +162,5 @@ All external calls — LLM inference, embeddings, vector store operations, and w
 
 ---
 
-## License
 
-Internal / Assignment Use
+
