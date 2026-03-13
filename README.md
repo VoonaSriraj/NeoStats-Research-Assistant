@@ -14,6 +14,8 @@ The assistant addresses a common limitation of general-purpose language models: 
 
 [https://neostats-research-assistant.streamlit.app/](https://neostats-research-assistant.streamlit.app/)
 
+[![NeoStats Research Assistant](assets/demo.png)](https://neostats-research-assistant.streamlit.app/)
+
 ---
 
 ## Features
